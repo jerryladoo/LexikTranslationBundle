@@ -51,6 +51,8 @@ class LexikTranslationExtension extends Extension
         $container->setParameter('lexik_translation.exporter.json.hierarchical_format', $config['exporter']['json_hierarchical_format']);
         $container->setParameter('lexik_translation.exporter.yml.use_tree', $config['exporter']['use_yml_tree']);
 
+        $container->setParameter('lexik_translation.clear_remote_cache.url', $config['clear_remote_cache']['url']);
+
         $objectManager = isset($config['storage']['object_manager']) ? $config['storage']['object_manager'] : null;
 
         $this->buildTranslationStorageDefinition($container, $config['storage']['type'], $objectManager);

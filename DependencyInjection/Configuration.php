@@ -3,6 +3,7 @@
 namespace Lexik\Bundle\TranslationBundle\DependencyInjection;
 
 use Lexik\Bundle\TranslationBundle\Storage\StorageInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -140,6 +141,22 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
 
+        $this->addClearCacheRequestToken($rootNode);
         return $treeBuilder;
+    }
+
+    private function addClearCacheRequestToken(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode("clear_remote_cache")
+                    ->children()
+                        ->scalarNode("url")
+                            ->isRequired()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

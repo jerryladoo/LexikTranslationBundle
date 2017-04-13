@@ -64,6 +64,14 @@ class TranslationController extends Controller
     {
         $this->get('lexik_translation.translator')->removeLocalesCacheFiles($this->getManagedLocales());
 
+        try {
+
+            $this->get('lexik_translation.translator')->clearRemoteCache($this->getParameter("lexik_translation.clear_remote_cache.url"));
+        } catch (\Exception $e) {
+            $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+            return $this->redirect($this->generateUrl('lexik_translation_grid'));
+        }
+
         $message = $this->get('translator')->trans('translations.cache_removed', array(), 'LexikTranslationBundle');
 
         if ($request->isXmlHttpRequest()) {
